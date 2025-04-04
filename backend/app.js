@@ -1,6 +1,8 @@
 const express = require('express')
 const cors = require('cors')
 const fileRoutes = require('./routes/fileRoutes')
+const cloudinary = require('./utils/cloudinary');
+const fs = require('fs');
 
 const app = express();
 
