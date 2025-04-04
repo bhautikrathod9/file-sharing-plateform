@@ -1,5 +1,6 @@
 const File = require('../models/File.js')
 const cloudinary = require('cloudinary')
+const fs = require('fs')
 
 exports.uploadFile = async (req, res) => {
     const { accessId } = req.body;
@@ -20,6 +21,11 @@ exports.uploadFile = async (req, res) => {
         })
 
         await file.save()
+
+        fs.unlink(req.file.path, (err) => {
+            if(err) console.error('Failed to delete temp file.', err)
+        })
+    
         res.status(201).json({message: "File uploaded", accessId})
     } catch (error) {
         res.status(500).json({message: 'Upload failed', error: error.message})
